@@ -2,6 +2,13 @@
   <div class="home">
 
 		<h1>New Recipe</h1>
+		<div>
+			Title: <input type="text" v-model="newRecipeTitle"><br>
+			Prep Time: <input type="number" v-model="newRecipePrepTime"><br>
+			Ingredients: <input type="text" v-model="newRecipeIngredients"><br>
+			Directions: <input type="text" v-model="newRecipeDirections"><br>
+			Image Url: <input type="text" v-model="newRecipeImageUrl">
+		</div>
 		<button v-on:click="createRecipe()">Create</button>
 
     <h1>{{ message }}</h1>
@@ -26,7 +33,12 @@ export default {
   data: function() {
     return {
       message: "Bit Please Cookbook",
-      recipes: []
+      recipes: [],
+      newRecipeTitle: "",
+      newRecipePrepTime: "",
+      newRecipeIngredients: "",
+      newRecipeDirections: "",
+      newRecipeImageUrl: ""
     };
   },
   created: function() {
@@ -38,11 +50,11 @@ export default {
   	createRecipe: function() {
   		// make a post request via axios to create a new recipe in our database!
   		var params = {
-  			title: "Coffee",
-  			ingredients: "Beans",
-  			directions: "Brew",
-  			image_url: "https://img.etimg.com/thumb/msid-67055775,width-643,imgsize-709079,resizemode-4/coffeebeans.jpg",
-  			prep_time: 5
+  			title: this.newRecipeTitle,
+  			ingredients: this.newRecipeIngredients,
+  			directions: this.newRecipeDirections,
+  			image_url: this.newRecipeImageUrl,
+  			prep_time: this.newRecipePrepTime
   		}
   		axios.post("/api/recipes", params).then(response => {
   			console.log("Success!", response.data);
