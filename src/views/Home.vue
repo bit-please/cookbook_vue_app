@@ -15,9 +15,14 @@
     <div v-for="recipe in recipes">
     	<h3>Title: {{ recipe.title }}</h3>
     	<img v-bind:src="recipe.image_url" alt="">
-    	<p>Ingredients: {{ recipe.ingredients }}</p>
-    	<p>Directions: {{ recipe.directions }}</p>
-    	<p>Prep Time: {{ recipe.prep_time }}</p>
+    	<div>
+    		<button v-on:click="currentRecipe = recipe">More Info</button>
+    	</div>
+    	<div v-if="recipe === currentRecipe">
+	    	<p>Ingredients: {{ currentRecipe.ingredients }}</p>
+	    	<p>Directions: {{ currentRecipe.directions }}</p>
+	    	<p>Prep Time: {{ currentRecipe.prep_time }}</p>
+    	</div>
     </div>
 
   </div>
@@ -34,6 +39,7 @@ export default {
     return {
       message: "Bit Please Cookbook",
       recipes: [],
+      currentRecipe: {},
       newRecipeTitle: "",
       newRecipePrepTime: "",
       newRecipeIngredients: "",
@@ -59,6 +65,11 @@ export default {
   		axios.post("/api/recipes", params).then(response => {
   			console.log("Success!", response.data);
   			this.recipes.push(response.data);
+  			this.newRecipeTitle = "";
+  			this.newRecipePrepTime = "";
+  			this.newRecipeIngredients = "";
+  			this.newRecipeDirections = "";
+  			this.newRecipeImageUrl = "";
   		});
   	}
   }
