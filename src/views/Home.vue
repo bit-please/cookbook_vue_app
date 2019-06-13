@@ -25,9 +25,8 @@
 	    	<p>Prep Time: {{ currentRecipe.prep_time }}</p>
 	    	<h4>Edit Recipe</h4>
 	    	<div>
+	    		Recipe object: {{ recipe }} <br>
 	    		Title: <input type="text" v-model="recipe.title"><br>
-
-	    		Recipe.title value: {{recipe.title}} <br>
 	    		Prep Time: <input type="number" v-model="recipe.prep_time"><br>
 	    		Ingredients: <input type="text" v-model="recipe.ingredients"><br>
 	    		Directions: <input type="text" v-model="recipe.directions"><br>
@@ -102,7 +101,7 @@ export default {
   		};
   		axios.patch("/api/recipes/" + recipe.id, params).then(response => {
   			console.log("Success!", response.data);
-  			recipe = response.data;
+  			// recipe = response.data;
   		});
   	}
   }
