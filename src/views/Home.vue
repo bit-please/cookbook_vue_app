@@ -32,6 +32,7 @@
 	    		Directions: <input type="text" v-model="recipe.directions"><br>
 	    		Image Url: <input type="text" v-model="recipe.image_url"><br>
 	    		<button v-on:click="updateRecipe(recipe)">Update</button>
+	    		<button v-on:click="destroyRecipe(recipe)">Destroy</button>
 	    	</div>
     	</div>
     </div>
@@ -102,6 +103,16 @@ export default {
   		axios.patch("/api/recipes/" + recipe.id, params).then(response => {
   			console.log("Success!", response.data);
   			// recipe = response.data;
+  		});
+  	},
+  	destroyRecipe: function(recipe) {
+  		// send an axios delete request to the backend to remove recipe from database
+  		axios.delete("/api/recipes/" + recipe.id).then(response => {
+  			console.log("Success!", response.data);
+  			// find index of recipe in recipes array
+  			var index = this.recipes.indexOf(recipe);
+  			// splice recipes array at index
+  			this.recipes.splice(index, 1);
   		});
   	}
   }
