@@ -2,6 +2,11 @@
   <div class="home">
 
 		<h1>New Recipe</h1>
+
+    <ul>
+      <li v-for="error in errors">{{ error }}</li>
+    </ul>
+
 		<div>
 			Title: <input type="text" v-model="newRecipeTitle"><br>
 			Prep Time: <input type="number" v-model="newRecipePrepTime"><br>
@@ -9,7 +14,7 @@
 			Directions: <input type="text" v-model="newRecipeDirections"><br>
 			Image Url: <input type="text" v-model="newRecipeImageUrl">
 		</div>
-		<button v-on:click="createRecipe()">Create</button>
+		<button class="btn btn-success" v-on:click="createRecipe()">Create</button>
 
     <h1>{{ message }}</h1>
 
@@ -17,7 +22,7 @@
     	<h3>Title: {{ recipe.title }}</h3>
     	<img v-bind:src="recipe.image_url" alt="">
     	<div>
-    		<button v-on:click="showRecipe(recipe)">More Info</button>
+    		<button class="btn btn-success" v-on:click="showRecipe(recipe)">More Info</button>
     	</div>
     	<div v-if="recipe === currentRecipe">
 	    	<p>Ingredients: {{ currentRecipe.ingredients }}</p>
@@ -31,8 +36,8 @@
 	    		Ingredients: <input type="text" v-model="recipe.ingredients"><br>
 	    		Directions: <input type="text" v-model="recipe.directions"><br>
 	    		Image Url: <input type="text" v-model="recipe.image_url"><br>
-	    		<button v-on:click="updateRecipe(recipe)">Update</button>
-	    		<button v-on:click="destroyRecipe(recipe)">Destroy</button>
+	    		<button class="btn btn-warning" v-on:click="updateRecipe(recipe)">Update</button>
+	    		<button class="btn btn-danger" v-on:click="destroyRecipe(recipe)">Destroy</button>
 	    	</div>
     	</div>
     </div>
@@ -56,7 +61,8 @@ export default {
       newRecipePrepTime: "",
       newRecipeIngredients: "",
       newRecipeDirections: "",
-      newRecipeImageUrl: ""
+      newRecipeImageUrl: "",
+      errors: []
     };
   },
   created: function() {
@@ -82,7 +88,9 @@ export default {
   			this.newRecipeIngredients = "";
   			this.newRecipeDirections = "";
   			this.newRecipeImageUrl = "";
-  		});
+  		}).catch(error => {
+        this.errors = error.response.data.errors;
+      });
   	},
   	showRecipe: function(recipe) {
   		if (this.currentRecipe === recipe) {
