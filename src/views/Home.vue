@@ -5,14 +5,13 @@
 
     <div v-for="recipe in recipes">
     	<h3>Title: {{ recipe.title }}</h3>
-    	<img v-bind:src="recipe.image_url" alt="">
+      <router-link v-bind:to="'/recipes/' + recipe.id">
+    	  <img v-bind:src="recipe.image_url" alt="">
+      </router-link>
     	<div>
     		<button class="btn btn-success" v-on:click="showRecipe(recipe)">More Info</button>
     	</div>
     	<div v-if="recipe === currentRecipe">
-	    	<p>Ingredients: {{ currentRecipe.ingredients }}</p>
-	    	<p>Directions: {{ currentRecipe.directions }}</p>
-	    	<p>Prep Time: {{ currentRecipe.prep_time }}</p>
 	    	<h4>Edit Recipe</h4>
 	    	<div>
 	    		Recipe object: {{ recipe }} <br>
@@ -48,6 +47,7 @@ export default {
   created: function() {
   	axios.get("/api/recipes").then(response => {
   		this.recipes = response.data;
+      console.log(this.recipes);
   	});
   },
   methods: {
