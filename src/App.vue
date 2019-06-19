@@ -9,9 +9,9 @@
             <ul>
               <li><router-link to="/">Home</router-link></li>
               <li><router-link to="/recipes/new">New Recipe</router-link></li>
-              <li><router-link to="/login">Login</router-link></li>
-              <li><router-link to="/logout">Logout</router-link></li>
-              <li class="cta"><router-link to="/signup">Sign Up</router-link></li>
+              <li v-if="isLoggedIn()"><router-link to="/logout">Logout</router-link></li>
+              <li v-if="!isLoggedIn()"><router-link to="/login">Login</router-link></li>
+              <li v-if="!isLoggedIn()" class="cta"><router-link to="/signup">Sign Up</router-link></li>
             </ul>
           </nav>
         </div>
@@ -62,3 +62,19 @@
   </div>
 </template>
 
+<script>
+
+export default {
+  created: function() {
+  },
+  methods: {
+    isLoggedIn: function() {
+      if (localStorage.getItem('jwt')) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+};
+</script>
