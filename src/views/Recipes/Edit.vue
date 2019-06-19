@@ -61,7 +61,7 @@ export default {
   },
   methods: {
   	submit: function() {
-  		// send a patch request to the backend to update this recipe!
+  		// send a patch request to the backend to update this recipe
   		var params = {
   			title: this.recipe.title,
   			ingredients: this.recipe.ingredients,
@@ -78,6 +78,7 @@ export default {
   	},
   	destroyRecipe: function() {
   		// send an axios delete request to the backend to remove recipe from database
+  		if(confirm("Do you really want to delete " + this.recipe.title + "?"))
   		axios.delete("/api/recipes/" + this.recipe.id).then(response => {
   			console.log("Success!", response.data);
   			this.$router.push("/");

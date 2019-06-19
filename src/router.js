@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import About from './views/About.vue'
-import Test from './views/Test.vue'
-import RecipesNew from './views/RecipesNew.vue'
-import RecipesShow from './views/RecipesShow.vue'
-import RecipesEdit from './views/RecipesEdit.vue'
+import RecipesIndex from './views/Recipes/Index.vue'
+import RecipesNew from './views/Recipes/New.vue'
+import RecipesShow from './views/Recipes/Show.vue'
+import RecipesEdit from './views/Recipes/Edit.vue'
+import Signup from './views/Users/Signup.vue'
+import Login from './views/Users/Login.vue'
+import Logout from './views/Users/Logout.vue'
 
 Vue.use(Router)
 
@@ -15,21 +16,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: Test
+      name: 'recipes-index',
+      component: RecipesIndex
     },
     {
       path: '/recipes/new',
@@ -45,6 +33,21 @@ export default new Router({
       path: '/recipes/:id/edit',
       name: 'recipes-edit',
       component: RecipesEdit
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: Logout
     }
   ]
 })

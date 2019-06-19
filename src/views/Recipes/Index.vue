@@ -1,19 +1,5 @@
 <template>
-  <div class="home">
-<!-- 
-    <div v-for="recipe in recipes">
-    	<h3>Title: {{ recipe.title }}</h3>
-      <router-link v-bind:to="'/recipes/' + recipe.id">
-    	  <img v-bind:src="recipe.image_url" alt="">
-      </router-link>
-    	<div>
-    		<button class="btn btn-primary btn-outline with-arrow" v-on:click="showRecipe(recipe)">More Info</button>
-    	</div>
-    	<div v-if="recipe === currentRecipe">
-	    		<button class="btn btn-danger" v-on:click="destroyRecipe(recipe)">Destroy</button>
-	    	</div>
-    	</div>
-    </div> -->
+  <div class="recipes-index">
 
     <div id="fh5co-blog-section">
       <div class="container">
