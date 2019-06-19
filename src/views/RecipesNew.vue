@@ -30,7 +30,7 @@
         <label for="imageUrl">Image</label>
         <input type="text" class="form-control" id="imageUrl" placeholder="Paste image link" v-model="newRecipeImageUrl">
       </div>
-      <button type="submit" class="btn btn-success">Create</button>
+      <button type="submit" class="btn btn-primary btn-outline">Create</button>
     </form>
     
   </div>

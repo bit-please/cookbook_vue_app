@@ -1,20 +1,37 @@
 <template>
   <div class="home">
-
-    <h1>{{ message }}</h1>
-
+<!-- 
     <div v-for="recipe in recipes">
     	<h3>Title: {{ recipe.title }}</h3>
       <router-link v-bind:to="'/recipes/' + recipe.id">
     	  <img v-bind:src="recipe.image_url" alt="">
       </router-link>
     	<div>
-    		<button class="btn btn-success" v-on:click="showRecipe(recipe)">More Info</button>
+    		<button class="btn btn-primary btn-outline with-arrow" v-on:click="showRecipe(recipe)">More Info</button>
     	</div>
     	<div v-if="recipe === currentRecipe">
 	    		<button class="btn btn-danger" v-on:click="destroyRecipe(recipe)">Destroy</button>
 	    	</div>
     	</div>
+    </div> -->
+
+    <div id="fh5co-blog-section">
+      <div class="container">
+        <div class="row">
+          <div v-for="recipe in recipes" class="col-md-6 col-sm-6">
+            <router-link class="item-grid" v-bind:to="'/recipes/' + recipe.id">
+              <div class="image"><img v-bind:src="recipe.image_url" alt=""></div>
+              <div class="v-align">
+                <div class="v-align-middle">
+                  <h3 class="title">{{ recipe.title }}</h3>
+                  <h5 class="date"><span>Prep time: {{ recipe.prep_time }}</span></h5>
+                  <p>{{ recipe.ingredients }}</p>
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -48,16 +65,6 @@ export default {
   		} else {
 				this.currentRecipe = recipe;
   		}
-  	},
-  	destroyRecipe: function(recipe) {
-  		// send an axios delete request to the backend to remove recipe from database
-  		axios.delete("/api/recipes/" + recipe.id).then(response => {
-  			console.log("Success!", response.data);
-  			// find index of recipe in recipes array
-  			var index = this.recipes.indexOf(recipe);
-  			// splice recipes array at index
-  			this.recipes.splice(index, 1);
-  		});
   	}
   }
 };

@@ -1,7 +1,7 @@
 <template>
 	<div class="recipes-edit">
 		
-		<h1>Edit Recipe</h1>
+		<h1 class="text-center">Edit Recipe</h1>
 
 		<ul>
 		  <li v-for="error in errors">{{ error }}</li>
@@ -18,20 +18,27 @@
 		      <input type="number" class="form-control" id="prepTime" placeholder="20" v-model="recipe.prep_time">
 		    </div>
 		  </div>
-		  <div class="form-group">
+		  <div class="form-group col-md-12">
 		    <label for="ingredients">Ingredients</label>
 		    <input type="text" class="form-control" id="ingredients" placeholder="Sugar, water, butter, eggs..." v-model="recipe.ingredients">
 		  </div>
-		  <div class="form-group">
+		  <div class="form-group col-md-12">
 		    <label for="directions">Directions</label>
 		    <input type="text" class="form-control" id="directions" placeholder="Mix in bowl and bake at 350 for 10 mins..." v-model="recipe.directions">
 		  </div>
-		  <div class="form-group">
+		  <div class="form-group col-md-12">
 		    <label for="imageUrl">Image</label>
 		    <input type="text" class="form-control" id="imageUrl" placeholder="Paste image link" v-model="recipe.image_url">
 		  </div>
-		  <button type="submit" class="btn btn-warning">Update</button>
+		  <div class="form-group col-md-12 text-center">
+		  	<button type="submit" class="btn btn-primary">Update</button>
+		  </div>
+		  
 		</form>
+
+		<div class="text-center">
+			<button class="btn btn-danger" v-on:click="destroyRecipe()">Destroy</button>
+		</div>
 
 	</div>
 </template>
@@ -67,6 +74,13 @@ export default {
   			this.$router.push("/recipes/" + this.recipe.id);
   		}).catch(error => {
   			this.errors = error.response.data.errors;
+  		});
+  	},
+  	destroyRecipe: function() {
+  		// send an axios delete request to the backend to remove recipe from database
+  		axios.delete("/api/recipes/" + this.recipe.id).then(response => {
+  			console.log("Success!", response.data);
+  			this.$router.push("/");
   		});
   	}
   }
