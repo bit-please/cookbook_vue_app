@@ -6,15 +6,20 @@
         <div class="row">
 
           <div class="form-group">
-            <!-- <label for="title">Search by Title</label> -->
+            <label for="title">Search</label>
             <input type="text" class="form-control" placeholder="Enter title..." v-model="titleFilter" list="titles">
+          </div><br>
+
+          <div class="form-group">
+            <button class="btn btn-primary" v-on:click="setSortAttribute('title')">Sort by title</button>
+            <button class="btn btn-primary" v-on:click="setSortAttribute('prep_time')">Sort by prep time</button>
           </div><br>
 
           <datalist id="titles">
             <option v-for="recipe in recipes">{{ recipe.title }}</option>
           </datalist>
 
-          <div v-for="recipe in filterBy(recipes, titleFilter, 'title', 'ingredients')" class="col-md-6 col-sm-6">
+          <div v-for="recipe in orderBy(filterBy(recipes, titleFilter, 'title'), sortAttribute)" class="col-md-6 col-sm-6">
 
             <router-link class="item-grid" v-bind:to="'/recipes/' + recipe.id">
               <div class="image"><img v-bind:src="recipe.image_url" alt=""></div>
@@ -50,7 +55,8 @@ export default {
       recipes: [],
       currentRecipe: {},
       errors: [],
-      titleFilter: ""
+      titleFilter: "",
+      sortAttribute: "title"
     };
   },
   created: function() {
@@ -66,7 +72,10 @@ export default {
   		} else {
 				this.currentRecipe = recipe;
   		}
-  	}
+  	},
+    setSortAttribute: function(attribute) {
+      this.sortAttribute = attribute;
+    }
   }
 };
 </script>
