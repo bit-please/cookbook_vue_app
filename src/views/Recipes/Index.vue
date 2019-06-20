@@ -4,7 +4,13 @@
     <div id="fh5co-blog-section">
       <div class="container">
         <div class="row">
-          <div v-for="recipe in recipes" class="col-md-6 col-sm-6">
+
+          <!-- <div class="form-group">
+            <label for="title">Search by Title</label>
+            <input type="text" class="form-control" id="title" placeholder="Enter title..." v-model="titleFilter">
+          </div><br> -->
+
+          <div v-for="recipe in filterBy(recipes, $parent.titleFilter, 'title', 'ingredients')" class="col-md-6 col-sm-6">
             <router-link class="item-grid" v-bind:to="'/recipes/' + recipe.id">
               <div class="image"><img v-bind:src="recipe.image_url" alt=""></div>
               <div class="v-align">
@@ -16,6 +22,7 @@
               </div>
             </router-link>
           </div>
+
         </div>
       </div>
     </div>
@@ -28,14 +35,16 @@
 
 <script>
 import axios from "axios";
+import Vue2Filters from "vue2-filters"
 
 export default {
+  mixins: [Vue2Filters.mixin],
   data: function() {
     return {
       message: "Bit Please Cookbook",
       recipes: [],
       currentRecipe: {},
-      errors: []
+      errors: [],
     };
   },
   created: function() {
