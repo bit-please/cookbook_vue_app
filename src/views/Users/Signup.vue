@@ -11,6 +11,11 @@
           <label>Name:</label> 
           <input type="text" class="form-control" v-model="name">
         </div>
+        <!-- <div class="form-group">
+          <label>Bio:</label> 
+          <input type="text" class="form-control" v-model="bio">
+          <small v-if="bio.length > 1" class="text-primary">{{ 100 - bio.length }} characters remaining</small>
+        </div> -->
         <div class="form-group">
           <label>Email:</label>
           <input type="email" class="form-control" v-model="email">
@@ -18,10 +23,12 @@
         <div class="form-group">
           <label>Password:</label>
           <input type="password" class="form-control" v-model="password">
+          <small v-if="password.length > 0 && password.length < 8" class="text-danger">Must be at least 8 characters</small>
         </div>
         <div class="form-group">
           <label>Password confirmation:</label>
           <input type="password" class="form-control" v-model="passwordConfirmation">
+          <small v-if="passwordConfirmation !== password" class="text-danger">Must match password</small>
         </div>
         <input type="submit" class="btn btn-primary" value="Submit">
       </form>

@@ -1,36 +1,42 @@
 <template>
   <div class="recipes-new">
 
-    <h1>New Recipe</h1>
+    <h1 class="text-center">New Recipe</h1>
+
+    <div v-if="status" class="text-center">
+      <img v-bind:src="'https://http.cat/' + status" alt="">
+    </div>
 
     <ul>
-      <li v-for="error in errors">{{ error }}</li>
+      <li class="text-danger" v-for="error in errors">{{ error }}</li>
     </ul>
 
     <form v-on:submit.prevent="submit()">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="title">Title</label>
-          <input type="text" class="form-control" id="title" placeholder="Cookies" v-model="newRecipeTitle">
+          <input type="text" class="form-control" placeholder="Cookies" v-model="newRecipeTitle">
         </div>
         <div class="form-group col-md-6">
           <label for="prepTime">Prep Time</label>
           <input type="number" class="form-control" id="prepTime" placeholder="20" v-model="newRecipePrepTime">
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group col-md-12">
         <label for="ingredients">Ingredients</label>
-        <input type="text" class="form-control" id="ingredients" placeholder="Sugar, water, butter, eggs..." v-model="newRecipeIngredients">
+        <input type="text" class="form-control" placeholder="Sugar, water, butter, eggs..." v-model="newRecipeIngredients">
       </div>
-      <div class="form-group">
+      <div class="form-group col-md-12">
         <label for="directions">Directions</label>
-        <input type="text" class="form-control" id="directions" placeholder="Mix in bowl and bake at 350 for 10 mins..." v-model="newRecipeDirections">
+        <input type="text" class="form-control" placeholder="Mix in bowl and bake at 350 for 10 mins..." v-model="newRecipeDirections">
       </div>
-      <div class="form-group">
+      <div class="form-group col-md-12">
         <label for="imageUrl">Image</label>
-        <input type="text" class="form-control" id="imageUrl" placeholder="Paste image link" v-model="newRecipeImageUrl">
+        <input type="text" class="form-control" placeholder="Paste image link" v-model="newRecipeImageUrl">
       </div>
-      <button type="submit" class="btn btn-primary btn-outline">Create</button>
+      <div class="form-group col-md-12 text-center">
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
     </form>
     
   </div>
@@ -47,7 +53,8 @@ export default {
       newRecipeIngredients: "",
       newRecipeDirections: "",
       newRecipeImageUrl: "",
-      errors: []
+      errors: [],
+      status: ""
     };
   },
   created: function() {
@@ -66,6 +73,7 @@ export default {
   			this.$router.push("/");
   		}).catch(error => {
         this.errors = error.response.data.errors;
+        this.status = error.response.status;
       });
   	}
   }

@@ -29,19 +29,23 @@
             <option v-for="recipe in recipes">{{ recipe.title }}</option>
           </datalist>
 
-          <div v-for="recipe in orderBy(filterBy(recipes, titleFilter, 'title'), sortAttribute, sortAscending)" class="col-md-6 col-sm-6">
 
-            <router-link class="item-grid" v-bind:to="'/recipes/' + recipe.id">
-              <div class="image"><img v-bind:src="recipe.image_url" alt=""></div>
-              <div class="v-align">
-                <div class="v-align-middle">
-                  <h3 class="title">{{ recipe.title }}</h3>
-                  <h5 class="date"><span>Prep time: {{ recipe.prep_time }}</span></h5>
-                  <p>{{ recipe.ingredients }}</p>
+
+          <transition-group appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <div v-for="recipe in orderBy(filterBy(recipes, titleFilter, 'title'), sortAttribute, sortAscending)" class="col-md-6 col-sm-6" v-bind:key="recipe.id">
+
+              <router-link class="item-grid" v-bind:to="'/recipes/' + recipe.id">
+                <div class="image"><img v-bind:src="recipe.image_url" alt=""></div>
+                <div class="v-align">
+                  <div class="v-align-middle">
+                    <h3 class="title">{{ recipe.title }}</h3>
+                    <h5 class="date"><span>Prep time: {{ recipe.prep_time }}</span> | <span>Last modified: {{ relativeDate(recipe.updated_at) }}</span></h5>
+                    <p>{{ recipe.ingredients }}</p>
+                  </div>
                 </div>
-              </div>
-            </router-link>
-          </div>
+              </router-link>
+            </div>
+          </transition-group>
 
         </div>
       </div>
@@ -55,7 +59,8 @@
 
 <script>
 import axios from "axios";
-import Vue2Filters from "vue2-filters"
+import Vue2Filters from "vue2-filters";
+import moment from 'moment';
 
 export default {
   mixins: [Vue2Filters.mixin],
@@ -88,6 +93,9 @@ export default {
         this.sortAscending = 1;
       }
       this.sortAttribute = attribute;
+    },
+    relativeDate: function(date) {
+      return moment(date).fromNow();
     }
   }
 };
