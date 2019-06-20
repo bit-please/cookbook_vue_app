@@ -11,15 +11,25 @@
           </div><br>
 
           <div class="form-group">
-            <button class="btn btn-primary" v-on:click="setSortAttribute('title')">Sort by title</button>
-            <button class="btn btn-primary" v-on:click="setSortAttribute('prep_time')">Sort by prep time</button>
+            <button class="btn btn-primary" v-on:click="setSortAttribute('title')">Sort by title 
+
+              <i v-if="sortAttribute === 'title' && sortAscending === 1" class="icon-arrow-up"></i>
+              <i v-if="sortAttribute === 'title' && sortAscending === -1" class="icon-arrow-down"></i>
+
+            </button>
+            <button class="btn btn-primary" v-on:click="setSortAttribute('prep_time')">Sort by prep time 
+
+              <i v-if="sortAttribute === 'prep_time' && sortAscending === 1" class="icon-arrow-up"></i>
+              <i v-if="sortAttribute === 'prep_time' && sortAscending === -1" class="icon-arrow-down"></i>
+
+            </button>
           </div><br>
 
           <datalist id="titles">
             <option v-for="recipe in recipes">{{ recipe.title }}</option>
           </datalist>
 
-          <div v-for="recipe in orderBy(filterBy(recipes, titleFilter, 'title'), sortAttribute)" class="col-md-6 col-sm-6">
+          <div v-for="recipe in orderBy(filterBy(recipes, titleFilter, 'title'), sortAttribute, sortAscending)" class="col-md-6 col-sm-6">
 
             <router-link class="item-grid" v-bind:to="'/recipes/' + recipe.id">
               <div class="image"><img v-bind:src="recipe.image_url" alt=""></div>
@@ -56,7 +66,8 @@ export default {
       currentRecipe: {},
       errors: [],
       titleFilter: "",
-      sortAttribute: "title"
+      sortAttribute: "title",
+      sortAscending: 1
     };
   },
   created: function() {
@@ -67,13 +78,15 @@ export default {
   },
   methods: {
   	showRecipe: function(recipe) {
-  		if (this.currentRecipe === recipe) {
-  			this.currentRecipe = null;
-  		} else {
-				this.currentRecipe = recipe;
-  		}
+			this.currentRecipe = recipe;
   	},
     setSortAttribute: function(attribute) {
+      if (this.sortAttribute === attribute) {
+        // if i click on the same button, toggle the value of sortAcending
+        this.sortAscending = this.sortAscending * -1;
+      } else {
+        this.sortAscending = 1;
+      }
       this.sortAttribute = attribute;
     }
   }
