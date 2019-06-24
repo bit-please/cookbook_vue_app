@@ -32,7 +32,7 @@
       </div>
       <div class="form-group col-md-12">
         <label for="imageUrl">Image</label>
-        <input type="text" class="form-control" placeholder="Paste image link" v-model="newRecipeImageUrl">
+        <input type="file" class="form-control" v-on:change="setFile($event)" ref="fileInput">
       </div>
       <div class="form-group col-md-12 text-center">
         <button type="submit" class="btn btn-primary">Create</button>
@@ -60,16 +60,20 @@ export default {
   created: function() {
   },
   methods: {
+    setFile: function(event) {
+      if (event.target.files.length > 0) {
+        this.newRecipeImageUrl = event.target.files[0];
+      }
+    },
   	submit: function() {
   		// make a post request via axios to create a new recipe in our database!
-  		var params = {
-  			title: this.newRecipeTitle,
-  			ingredients: this.newRecipeIngredients,
-  			directions: this.newRecipeDirections,
-  			image_url: this.newRecipeImageUrl,
-  			prep_time: this.newRecipePrepTime
-  		};
-  		axios.post("/api/recipes", params).then(response => {
+      var formData = new FormData();
+      formData.append("title", this.newRecipeTitle);
+      formData.append("ingredients", this.newRecipeIngredients);
+      formData.append("directions", this.newRecipeDirections);
+      formData.append("image_url", this.newRecipeImageUrl);
+      formData.append("prep_time", this.newRecipePrepTime);
+  		axios.post("/api/recipes", formData).then(response => {
   			this.$router.push("/");
   		}).catch(error => {
         this.errors = error.response.data.errors;
