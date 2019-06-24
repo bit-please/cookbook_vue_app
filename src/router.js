@@ -7,6 +7,7 @@ import RecipesEdit from './views/Recipes/Edit.vue'
 import Signup from './views/Users/Signup.vue'
 import Login from './views/Users/Login.vue'
 import Logout from './views/Users/Logout.vue'
+import Map from './views/Map.vue'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ export default new Router({
       path: '/logout',
       name: 'logout',
       component: Logout
+    },
+    {
+      path: '/map',
+      name: 'map',
+      component: Map
     }
   ]
 })
