@@ -9,7 +9,7 @@
             <ul>
               <li><router-link to="/">Home</router-link></li>
               <li><router-link to="/recipes/new">New Recipe</router-link></li>
-              <li v-if="isLoggedIn()"><router-link to="/logout">Logout</router-link></li>
+              <li v-if="isLoggedIn()"><router-link to="/logout">Logout {{ username }}</router-link></li>
               <li v-if="!isLoggedIn()"><router-link to="/login">Login</router-link></li>
               <li v-if="!isLoggedIn()" class="cta"><router-link to="/signup">Sign Up</router-link></li>
             </ul>
@@ -63,9 +63,19 @@
 </template>
 
 <script>
-
+import axios from "axios";
 export default {
+  data: function() {
+    return {
+      username: localStorage.getItem('username'),
+      user: {}
+    };
+  },
   created: function() {
+    axios.get("/api/users/me").then(response => {
+      this.user = response.data;
+      console.log(this.user);
+    });
   },
   methods: {
     isLoggedIn: function() {

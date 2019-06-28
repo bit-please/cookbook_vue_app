@@ -1,6 +1,8 @@
 <template>
   <div class="recipes-show">
 
+    <h4 v-if="$parent.isLoggedIn()">Logged in as: {{ $parent.user.name }}</h4>
+    
     <h2>{{ recipe.title }}</h2>
     <img v-bind:src="recipe.image_url" alt="">
     <p>Ingredients: {{ recipe.ingredients }}</p>
