@@ -34,6 +34,16 @@
         <label for="imageUrl">Image</label>
         <input type="file" class="form-control" v-on:change="setFile($event)" ref="fileInput">
       </div>
+      <div class="form-group col-md-12">
+        <label for="categories">Categories</label><br>
+
+        <span v-for="category in categories">
+          <input type="checkbox" :value="category.id" v-model="categoryIds"> {{ category.name }}
+        </span>
+        <br>
+        <span>categoryIds: {{ categoryIds }}</span>
+
+      </div>
       <div class="form-group col-md-12 text-center">
         <button type="submit" class="btn btn-primary">Create</button>
       </div>
@@ -54,10 +64,16 @@ export default {
       newRecipeDirections: "",
       newRecipeImageUrl: "",
       errors: [],
-      status: ""
+      status: "",
+      categories: [],
+      categoryIds: []
     };
   },
   created: function() {
+    axios.get("/api/categories").then(response => {
+      this.categories = response.data;
+      console.log(this.categories);
+    });
   },
   methods: {
     setFile: function(event) {
@@ -73,6 +89,7 @@ export default {
       formData.append("directions", this.newRecipeDirections);
       formData.append("image_url", this.newRecipeImageUrl);
       formData.append("prep_time", this.newRecipePrepTime);
+      formData.append("category_ids", this.categoryIds);
   		axios.post("/api/recipes", formData).then(response => {
   			this.$router.push("/");
   		}).catch(error => {

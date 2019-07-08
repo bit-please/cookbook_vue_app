@@ -4,6 +4,10 @@
     <h4 v-if="$parent.isLoggedIn()">Logged in as: {{ $parent.user.name }}</h4>
     
     <h2>{{ recipe.title }}</h2>
+    
+    <li v-for="category in recipe.categories">{{ category.name }}</li>
+
+
     <img v-bind:src="recipe.image_url" alt="">
     <p>Ingredients: {{ recipe.ingredients }}</p>
     <p>Directions: {{ recipe.directions }}</p>

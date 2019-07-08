@@ -50,7 +50,7 @@ export default {
   data: function() {
     return {
       errors: [],
-      recipe: {}
+      recipe: {},
     };
   },
   created: function() {
