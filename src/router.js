@@ -8,6 +8,7 @@ import Signup from './views/Users/Signup.vue'
 import Login from './views/Users/Login.vue'
 import Logout from './views/Users/Logout.vue'
 import Map from './views/Map.vue'
+import Messages from './views/Messages.vue'
 
 Vue.use(Router)
 
@@ -54,6 +55,11 @@ export default new Router({
       path: '/map',
       name: 'map',
       component: Map
+    },
+    {
+      path: '/messages',
+      name: 'messages',
+      component: Messages
     }
   ]
 })
